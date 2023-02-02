@@ -1,0 +1,166 @@
+#!/bin/bash
+
+
+usage() {
+    cat <<-EOF
+NAME
+
+    ${0##*/} - count the occurrences of a string in each line of files
+
+SYNOPSYS
+
+    ${0##*/} [OPTION]... [FILE]...
+
+DESCRIPTION
+
+    OPTION:
+
+        -h              Display help
+
+        -E <pattern>    Interpret PATTERN as an extended regular expression
+        -F <pattern>    Interpret PATTERN as a list of fixed strings (instead of regular expressions), separated by newlines, any of which is to be matched.
+
+        -P              Print the file name for each match.  This is the default when there is more than one file to search.
+        -p              Suppress the prefixing of file names on output.  This is the default when there is only one file (or only standard input) to search.
+
+        -i              Ignore case distinctions, so that characters that differ only in case match each other.
+        -n              Prefix each line of output with the 1-based line number within its input file.
+        -o              Print only the matching lines.
+        -t              Display the count of occurrences in the file
+
+    FILE:
+
+        With no FILE, or when FILE is -, read standard input.
+
+EXAMPLE
+
+    $ bin/oc -no -E 's[aei]' /etc/passwd
+    22:1:messagebus:x:103:107::/nonexistent:/usr/sbin/nologin
+    29:2:cups-pk-helper:x:110:115:user for cups-pk-helper service,,,:/home/cups-pk-helper:/usr/sbin/nologin
+    30:2:saned:x:111:117::/var/lib/saned:/usr/sbin/nologin
+    31:1:speech-dispatcher:x:112:29:Speech Dispatcher,,,:/var/run/speech-dispatcher:/bin/false
+    33:3:pulse:x:114:119:PulseAudio daemon,,,:/var/run/pulse:/usr/sbin/nologin
+    35:1:gdm:x:116:122:Gnome Display Manager:/var/lib/gdm3:/bin/false
+    39:1:omi:x:999:998::/home/omi:/bin/false
+
+    $ bin/oc -Piot -F $'mes\ngno' /etc/passwd
+    /etc/passwd:3:games:x:5:60:games:/usr/games:/usr/sbin/nologin
+    /etc/passwd:1:messagebus:x:103:107::/nonexistent:/usr/sbin/nologin
+    /etc/passwd:1:gdm:x:116:122:Gnome Display Manager:/var/lib/gdm3:/bin/false
+    /etc/passwd:#5
+
+AUTHOR
+	Written by Jean-François Giraud.
+
+COPYRIGHT
+	Copyright © 2023 Jean-François Giraud.  License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>.
+	This is free software: you are free to change and redistribute it.  There is NO WARRANTY, to the extent permitted by law.
+
+EOF
+    exit 0
+}
+
+error() {
+    STATUS="$1"
+    MSG="$2"
+    cat >&2 <<-EOF
+${0##*/}: $MSG
+Try \`${0##*/} -h\` for more information.
+EOF
+    exit 1
+}
+
+
+option=''
+only_matching=0
+display_line_number=0
+display_total=0
+print_filename=-1
+ignore_case=''
+eol=$'\n'
+while getopts ":hF:E:ontpPi" o
+do
+	  case "$o" in
+		    h)
+                usage
+            ;;
+	    	E)
+                option='-E'
+                what="$OPTARG"
+            ;;
+	    	F)
+                option='-F'
+                what="$OPTARG"
+            ;;
+            o)
+                only_matching=1
+            ;;
+            n)
+                display_line_number=1
+            ;;
+            i)
+                ignore_case='-i'
+            ;;
+            t)
+                display_total=1
+            ;;
+            P)
+                print_filename=1
+            ;;
+            p)
+                print_filename=0
+            ;;
+            ?)
+                error "An argument is requiered for option -$OPTARG."
+            ;;
+	  esac
+done
+
+shift $(($OPTIND - 1))
+
+file="$1"
+if [ -z $file ]; then
+    file="-"
+fi
+
+shopt -s extglob
+
+if [[ $# -ge 2 ]]; then
+    display_file=1
+else
+    display_file=0
+fi
+
+while [[ -n "$file" ]];
+do
+    if [[ $print_filename -eq 1 ]]; then
+        fn=$file
+    elif [[ $print_filename -eq 0 ]]; then
+        :
+    elif [[ $display_file -eq 1 ]]; then
+        fn=$file
+    fi
+    if [[ $display_line_number -eq 1 ]]; then
+        line_number=0
+    fi
+    file_total=0
+    while IFS=$'\n' read line || [[ $line ]]
+    do
+        if [[ $display_line_number -eq 1 ]]; then
+            line_number=$((line_number+1))
+        fi
+        count=$(echo "$line" | grep -o $option $ignore_case "$what" | wc -l)
+        file_total=$((file_total + $count))
+        if [[ $only_matching -eq 0 ]]; then
+            printf "%s%s%d:%s%s" "${fn:+$fn:}" "${line_number:+$line_number:}" $count "$line" "$eol"
+        elif [[ $only_matching -eq 1 && $count -ge 1 ]]; then
+            printf "%s%s%d:%s%s" "${fn:+$fn:}" "${line_number:+$line_number:}" $count "$line" "$eol"
+        fi
+    done < <( cat "$file" )
+    if [[ $display_total -eq 1 ]]; then
+        printf "%s%s%s" "${fn:+$fn:}" "${file_total:+#$file_total}" "$eol"
+    fi
+    shift
+    file="$1"
+done
+
