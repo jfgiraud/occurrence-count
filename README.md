@@ -15,7 +15,7 @@ Count occurrences of a string or pattern in each line of a file
         -E <pattern>    Interpret PATTERN as an extended regular expression
         -F <pattern>    Interpret PATTERN as a list of fixed strings (instead of regular expressions), separated by newlines, any of which is to be matched.
 
-        -P              Print the file name for each match.  This is the default when there is more than one file to search.
+        -P              Print the file name for each line.  This is the default when there is more than one file to search.
         -p              Suppress the prefixing of file names on output.  This is the default when there is only one file (or only standard input) to search.
 
         -i              Ignore case distinctions, so that characters that differ only in case match each other.

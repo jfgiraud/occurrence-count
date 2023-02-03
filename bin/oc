@@ -20,7 +20,7 @@ DESCRIPTION
         -E <pattern>    Interpret PATTERN as an extended regular expression
         -F <pattern>    Interpret PATTERN as a list of fixed strings (instead of regular expressions), separated by newlines, any of which is to be matched.
 
-        -P              Print the file name for each match.  This is the default when there is more than one file to search.
+        -P              Print the file name for each line.  This is the default when there is more than one file to search.
         -p              Suppress the prefixing of file names on output.  This is the default when there is only one file (or only standard input) to search.
 
         -i              Ignore case distinctions, so that characters that differ only in case match each other.
@@ -64,7 +64,7 @@ error() {
     STATUS="$1"
     MSG="$2"
     cat >&2 <<-EOF
-${0##*/}: $MSG
+${0##*/}: ${MSG}
 Try \`${0##*/} -h\` for more information.
 EOF
     exit 1
@@ -86,11 +86,11 @@ do
             ;;
 	    	E)
                 option='-E'
-                what="$OPTARG"
+                what="${OPTARG}"
             ;;
 	    	F)
                 option='-F'
-                what="$OPTARG"
+                what="${OPTARG}"
             ;;
             o)
                 only_matching=1
@@ -111,15 +111,15 @@ do
                 print_filename=0
             ;;
             ?)
-                error "An argument is requiered for option -$OPTARG."
+                error "An argument is requiered for option -${OPTARG}."
             ;;
 	  esac
 done
 
-shift $(($OPTIND - 1))
+shift $((${OPTIND} - 1))
 
 file="$1"
-if [ -z $file ]; then
+if [ -z ${file} ]; then
     file="-"
 fi
 
@@ -131,34 +131,34 @@ else
     display_file=0
 fi
 
-while [[ -n "$file" ]];
+while [[ -n "${file}" ]];
 do
-    if [[ $print_filename -eq 1 ]]; then
-        fn=$file
-    elif [[ $print_filename -eq 0 ]]; then
+    if [[ ${print_filename} -eq 1 ]]; then
+        fn=${file}
+    elif [[ ${print_filename} -eq 0 ]]; then
         :
-    elif [[ $display_file -eq 1 ]]; then
-        fn=$file
+    elif [[ ${display_file} -eq 1 ]]; then
+        fn=${file}
     fi
-    if [[ $display_line_number -eq 1 ]]; then
+    if [[ ${display_line_number} -eq 1 ]]; then
         line_number=0
     fi
     file_total=0
-    while IFS=$'\n' read line || [[ $line ]]
+    while IFS=$'\n' read line || [[ ${line} ]]
     do
-        if [[ $display_line_number -eq 1 ]]; then
+        if [[ ${display_line_number} -eq 1 ]]; then
             line_number=$((line_number+1))
         fi
-        count=$(echo "$line" | grep -o $option $ignore_case "$what" | wc -l)
-        file_total=$((file_total + $count))
+        count=$(echo "${line}" | grep -o ${option} ${ignore_case} "${what}" | wc -l)
+        file_total=$((file_total + ${count}))
         if [[ $only_matching -eq 0 ]]; then
-            printf "%s%s%d:%s%s" "${fn:+$fn:}" "${line_number:+$line_number:}" $count "$line" "$eol"
-        elif [[ $only_matching -eq 1 && $count -ge 1 ]]; then
-            printf "%s%s%d:%s%s" "${fn:+$fn:}" "${line_number:+$line_number:}" $count "$line" "$eol"
+            printf "%s%s%d:%s%s" "${fn:+${fn}:}" "${line_number:+${line_number}:}" ${count} "${line}" "${eol}"
+        elif [[ $only_matching -eq 1 && ${count} -ge 1 ]]; then
+            printf "%s%s%d:%s%s" "${fn:+${fn}:}" "${line_number:+${line_number}:}" ${count} "${line}" "${eol}"
         fi
-    done < <( cat "$file" )
-    if [[ $display_total -eq 1 ]]; then
-        printf "%s%s%s" "${fn:+$fn:}" "${file_total:+#$file_total}" "$eol"
+    done < <( cat "${file}" )
+    if [[ ${display_total} -eq 1 ]]; then
+        printf "%s%s%s" "${fn:+$fn:}" "${file_total:+#${file_total}}" "${eol}"
     fi
     shift
     file="$1"
