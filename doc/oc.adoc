@@ -1,0 +1,58 @@
+= qaj(1)
+:doctype: manpage
+:man manual: User commands
+:man source: occurence-count {release-version}
+:page-layout: base
+:command: oc
+
+== NAME
+
+oc - Count occurrences of a string or pattern in each line of files
+
+== SYNOPSIS
+
+*oc* [_OPTION_]... [_FILE_]...
+
+== DESCRIPTION
+
+*oc* is a small utility to count occurences of a string or pattern in each line of files.
+
+With no FILE, or when FILE is `-`, read standard input.
+
+== OPTIONS
+
+=== Select and sort items
+
+*-h*::
+Display help.
+
+*-E* _pattern_::
+Interpret PATTERN as an extended regular expression.
+
+*-F* _pattern_::
+Interpret PATTERN as a list of fixed strings (instead of regular expressions), separated by newlines, any of which is to be matched.
+
+*-P*::
+Print the file name for each line.  This is the default when there is more than one file to search.
+
+*-p*::
+Suppress the prefixing of file names on output.  This is the default when there is only one file (or only standard input) to search.
+
+*-i*::
+Ignore case distinctions, so that characters that differ only in case match each other.
+
+*-n*::
+Prefix each line of output with the 1-based line number within its input file.
+
+*-o*::
+Print only the matching lines.
+
+*-t*::
+Display the count of occurrences in the file
+
+include::oc-examples.adoc[]
+
+ifdef::backend-manpage[]
+include::author.adoc[]
+include::copyright.adoc[]
+endif::[]

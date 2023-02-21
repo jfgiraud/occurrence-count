@@ -1,0 +1,25 @@
+== EXAMPLES
+// tag::examples[]
+.Display only the count of lines which match the pattern (`-n` line number ; `-o` only matching)
+[source,shell]
+----
+$ bin/oc -no -E 's[aei]' /etc/passwd
+22:1:messagebus:x:103:107::/nonexistent:/usr/sbin/nologin
+29:2:cups-pk-helper:x:110:115:user for cups-pk-helper service,,,:/home/cups-pk-helper:/usr/sbin/nologin
+30:2:saned:x:111:117::/var/lib/saned:/usr/sbin/nologin
+31:1:speech-dispatcher:x:112:29:Speech Dispatcher,,,:/var/run/speech-dispatcher:/bin/false
+33:3:pulse:x:114:119:PulseAudio daemon,,,:/var/run/pulse:/usr/sbin/nologin
+35:1:gdm:x:116:122:Gnome Display Manager:/var/lib/gdm3:/bin/false
+39:1:omi:x:999:998::/home/omi:/bin/false
+----
+
+.Display only the count of lines which match one of the given string (`-P` print file ; `-i` ignore case ; `-o` only matching ; `-t` display total count of file)
+[source,shell]
+----
+$ bin/oc -Piot -F $'mes\ngno' /etc/passwd
+/etc/passwd:3:games:x:5:60:games:/usr/games:/usr/sbin/nologin
+/etc/passwd:1:messagebus:x:103:107::/nonexistent:/usr/sbin/nologin
+/etc/passwd:1:gdm:x:116:122:Gnome Display Manager:/var/lib/gdm3:/bin/false
+/etc/passwd:#5
+----
+// end::examples[]
