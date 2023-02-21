@@ -1,0 +1,123 @@
+'\" t
+.\"     Title: qaj
+.\"    Author: [see the "AUTHORS" section]
+.\" Generator: Asciidoctor 1.5.5
+.\"      Date: 2023-02-21
+.\"    Manual: User commands
+.\"    Source: occurence-count 0.0.1
+.\"  Language: English
+.\"
+.TH "OC" "1" "2023-02-21" "occurence\-count 0.0.1" "User commands"
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.ss \n[.ss] 0
+.nh
+.ad l
+.de URL
+\\$2 \(laURL: \\$1 \(ra\\$3
+..
+.if \n[.g] .mso www.tmac
+.LINKSTYLE blue R < >
+.SH "NAME"
+qaj \- Count occurrences of a string or pattern in each line of files
+.SH "SYNOPSIS"
+.sp
+\fBoc\fP [\fIOPTION\fP]... [\fIFILE\fP]...
+.SH "DESCRIPTION"
+.sp
+\fBoc\fP is a small utility to count occurences of a string or pattern in each line of files.
+.sp
+With no FILE, or when FILE is \f[CR]\-\fP, read standard input.
+.SH "OPTIONS"
+.SS "Select and sort items"
+.sp
+\fB\-h\fP
+.RS 4
+Display help.
+.RE
+.sp
+\fB\-E\fP \fIpattern\fP
+.RS 4
+Interpret PATTERN as an extended regular expression.
+.RE
+.sp
+\fB\-F\fP \fIpattern\fP
+.RS 4
+Interpret PATTERN as a list of fixed strings (instead of regular expressions), separated by newlines, any of which is to be matched.
+.RE
+.sp
+\fB\-P\fP
+.RS 4
+Print the file name for each line.  This is the default when there is more than one file to search.
+.RE
+.sp
+\fB\-p\fP
+.RS 4
+Suppress the prefixing of file names on output.  This is the default when there is only one file (or only standard input) to search.
+.RE
+.sp
+\fB\-i\fP
+.RS 4
+Ignore case distinctions, so that characters that differ only in case match each other.
+.RE
+.sp
+\fB\-n\fP
+.RS 4
+Prefix each line of output with the 1\-based line number within its input file.
+.RE
+.sp
+\fB\-o\fP
+.RS 4
+Print only the matching lines.
+.RE
+.sp
+\fB\-t\fP
+.RS 4
+Display the count of occurrences in the file
+.RE
+.SH "EXAMPLES"
+.sp
+.B Quote words with \f[CR]\(aq\fP and join with \f[CR],\fP
+.br
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+$ bin/oc \-no \-E \(aqs[aei]\(aq /etc/passwd
+22:1:messagebus:x:103:107::/nonexistent:/usr/sbin/nologin
+29:2:cups\-pk\-helper:x:110:115:user for cups\-pk\-helper service,,,:/home/cups\-pk\-helper:/usr/sbin/nologin
+30:2:saned:x:111:117::/var/lib/saned:/usr/sbin/nologin
+31:1:speech\-dispatcher:x:112:29:Speech Dispatcher,,,:/var/run/speech\-dispatcher:/bin/false
+33:3:pulse:x:114:119:PulseAudio daemon,,,:/var/run/pulse:/usr/sbin/nologin
+35:1:gdm:x:116:122:Gnome Display Manager:/var/lib/gdm3:/bin/false
+39:1:omi:x:999:998::/home/omi:/bin/false
+.fi
+.if n \{\
+.RE
+.\}
+.sp
+.B Quote words with \f[CR]"\fP and join with \f[CR],\~\fP (comma + space)
+.br
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+$ bin/oc \-Piot \-F $\(aqmes\(rsngno\(aq /etc/passwd
+/etc/passwd:3:games:x:5:60:games:/usr/games:/usr/sbin/nologin
+/etc/passwd:1:messagebus:x:103:107::/nonexistent:/usr/sbin/nologin
+/etc/passwd:1:gdm:x:116:122:Gnome Display Manager:/var/lib/gdm3:/bin/false
+/etc/passwd:#5
+.fi
+.if n \{\
+.RE
+.\}
+.SH "AUTHOR"
+.sp
+Written by Jean\-François Giraud.
+.SH "COPYRIGHT"
+.sp
+Copyright \(co 2020 Jean\-François Giraud.  License GPLv3+: GNU GPL version 3 or later \c
+.URL "http://gnu.org/licenses/gpl.html" "" "."
+This is free software: you are free to change and redistribute it.  There is NO WARRANTY, to the extent permitted by law.
