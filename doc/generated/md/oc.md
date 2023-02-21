@@ -1,8 +1,12 @@
-qaj
-1
-oc
-Count occurrences of a string or pattern in each line of files
-**oc** \[*OPTION*\]…​ \[*FILE*\]…​
+NAME
+====
+
+oc - Count occurrences of a string or pattern in each line of files
+
+SYNOPSIS
+========
+
+**oc** \[*OPTION*\] \[*FILE*\]
 
 DESCRIPTION
 ===========
@@ -53,7 +57,8 @@ Display the count of occurrences in the file
 EXAMPLES
 ========
 
-**Quote words with `'` and join with `,`.**
+**Display only the count of lines which match the pattern (`-n` line
+number ; `-o` only matching).**
 
     $ bin/oc -no -E 's[aei]' /etc/passwd
     22:1:messagebus:x:103:107::/nonexistent:/usr/sbin/nologin
@@ -64,7 +69,9 @@ EXAMPLES
     35:1:gdm:x:116:122:Gnome Display Manager:/var/lib/gdm3:/bin/false
     39:1:omi:x:999:998::/home/omi:/bin/false
 
-**Quote words with `"` and join with `, ` (comma + space).**
+**Display only the count of lines which match one of the given string
+(`-P` print file ; `-i` ignore case ; `-o` only matching ; `-t` display
+total count of file).**
 
     $ bin/oc -Piot -F $'mes\ngno' /etc/passwd
     /etc/passwd:3:games:x:5:60:games:/usr/games:/usr/sbin/nologin

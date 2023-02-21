@@ -1,4 +1,4 @@
-![<https://github.com/jfgiraud/occurence-count/actions>](https://img.shields.io/github/actions/workflow/status/jfgiraud/quote-and-join/main.yml?label=CI)
+![<https://github.com/jfgiraud/quote-and-join/actions>](https://img.shields.io/github/actions/workflow/status/jfgiraud/quote-and-join/main.yml?label=CI)
 
 quote and join utilities
 ========================

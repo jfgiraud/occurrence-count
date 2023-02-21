@@ -1,17 +1,19 @@
-= qaj(1)
+ifdef::backend-manpage[]
+= oc(1)
 :doctype: manpage
 :man manual: User commands
 :man source: occurence-count {release-version}
 :page-layout: base
 :command: oc
 
+endif::[]
 == NAME
 
 oc - Count occurrences of a string or pattern in each line of files
 
 == SYNOPSIS
 
-*oc* [_OPTION_]... [_FILE_]...
+*oc* [_OPTION_] [_FILE_]
 
 == DESCRIPTION
 
