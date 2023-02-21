@@ -1,5 +1,5 @@
 DESTDIR ?= /usr/local
-REPOSITORY_NAME ?= occurence-count
+REPOSITORY_NAME ?= occurrence-count
 SCRIPTS = oc
 GENERATED_FILES = doc/generated/man/man1/oc.1 doc/generated/txt/oc.1.txt doc/generated/md/oc.md
 VERSION ?= $(shell cat doc/VERSION)
