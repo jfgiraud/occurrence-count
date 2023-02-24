@@ -26,11 +26,11 @@ Installation
 Usage
 =====
 
-**Use man !.**
+**Use man.**
 
     $ man oc
 
-**Or `-h` option.**
+**Use option.**
 
     $ oc -h
 
