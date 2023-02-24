@@ -4,7 +4,7 @@
 usage() {
     cat <<-EOF
 #BEGIN_DO_NOT_MODIFY:make update-doc
-OC(1)                                                                                           User commands                                                                                           OC(1)
+OC(1)                                                          User commands                                                         OC(1)
 
 NAME
        oc - Count occurrences of a string or pattern in each line of files
@@ -26,13 +26,15 @@ OPTIONS
            Interpret PATTERN as an extended regular expression.
 
        -F pattern
-           Interpret PATTERN as a list of fixed strings (instead of regular expressions), separated by newlines, any of which is to be matched.
+           Interpret PATTERN as a list of fixed strings (instead of regular expressions), separated by newlines, any of which is to be
+           matched.
 
        -P
            Print the file name for each line. This is the default when there is more than one file to search.
 
        -p
-           Suppress the prefixing of file names on output. This is the default when there is only one file (or only standard input) to search.
+           Suppress the prefixing of file names on output. This is the default when there is only one file (or only standard input) to
+           search.
 
        -i
            Ignore case distinctions, so that characters that differ only in case match each other.
@@ -49,7 +51,7 @@ OPTIONS
 EXAMPLES
        Display only the count of lines which match the pattern (-n line number ; -o only matching)
 
-           $ bin/oc -no -E 's[aei]' /etc/passwd
+           $ oc -no -E 's[aei]' /etc/passwd
            22:1:messagebus:x:103:107::/nonexistent:/usr/sbin/nologin
            29:2:cups-pk-helper:x:110:115:user for cups-pk-helper service,,,:/home/cups-pk-helper:/usr/sbin/nologin
            30:2:saned:x:111:117::/var/lib/saned:/usr/sbin/nologin
@@ -58,9 +60,10 @@ EXAMPLES
            35:1:gdm:x:116:122:Gnome Display Manager:/var/lib/gdm3:/bin/false
            39:1:omi:x:999:998::/home/omi:/bin/false
 
-       Display only the count of lines which match one of the given string (-P print file ; -i ignore case ; -o only matching ; -t display total count of file)
+       Display only the count of lines which match one of the given string (-P print file ; -i ignore case ; -o only matching ; -t display
+       total count of file)
 
-           $ bin/oc -Piot -F $'mes\ngno' /etc/passwd
+           $ oc -Piot -F $'mes\ngno' /etc/passwd
            /etc/passwd:3:games:x:5:60:games:/usr/games:/usr/sbin/nologin
            /etc/passwd:1:messagebus:x:103:107::/nonexistent:/usr/sbin/nologin
            /etc/passwd:1:gdm:x:116:122:Gnome Display Manager:/var/lib/gdm3:/bin/false
@@ -70,10 +73,10 @@ AUTHOR
        Written by Jean-François Giraud.
 
 COPYRIGHT
-       Copyright  ©  2020 Jean-François Giraud. License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>. This is free software: you are free to change and redistribute it. There is NO
-       WARRANTY, to the extent permitted by law.
+       Copyright © 2020 Jean-François Giraud. License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>. This is  free
+       software: you are free to change and redistribute it. There is NO WARRANTY, to the extent permitted by law.
 
-occurence-count 0.0.5                                                                             2023-02-21                                                                                            OC(1)
+occurence-count 0.0.5                                           2023-02-24                                                           OC(1)
 #END_DO_NOT_MODIFY:make update-doc
 EOF
     exit 0

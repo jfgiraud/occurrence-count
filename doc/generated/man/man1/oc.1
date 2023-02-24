@@ -2,12 +2,12 @@
 .\"     Title: oc
 .\"    Author: [see the "AUTHORS" section]
 .\" Generator: Asciidoctor 1.5.5
-.\"      Date: 2023-02-21
+.\"      Date: 2023-02-24
 .\"    Manual: User commands
 .\"    Source: occurence-count 0.0.5
 .\"  Language: English
 .\"
-.TH "OC" "1" "2023-02-21" "occurence\-count 0.0.5" "User commands"
+.TH "OC" "1" "2023-02-24" "occurence\-count 0.0.5" "User commands"
 .ie \n(.g .ds Aq \(aq
 .el       .ds Aq '
 .ss \n[.ss] 0
@@ -84,7 +84,7 @@ Display the count of occurrences in the file
 .RS 4
 .\}
 .nf
-$ bin/oc \-no \-E \(aqs[aei]\(aq /etc/passwd
+$ oc \-no \-E \(aqs[aei]\(aq /etc/passwd
 22:1:messagebus:x:103:107::/nonexistent:/usr/sbin/nologin
 29:2:cups\-pk\-helper:x:110:115:user for cups\-pk\-helper service,,,:/home/cups\-pk\-helper:/usr/sbin/nologin
 30:2:saned:x:111:117::/var/lib/saned:/usr/sbin/nologin
@@ -104,7 +104,7 @@ $ bin/oc \-no \-E \(aqs[aei]\(aq /etc/passwd
 .RS 4
 .\}
 .nf
-$ bin/oc \-Piot \-F $\(aqmes\(rsngno\(aq /etc/passwd
+$ oc \-Piot \-F $\(aqmes\(rsngno\(aq /etc/passwd
 /etc/passwd:3:games:x:5:60:games:/usr/games:/usr/sbin/nologin
 /etc/passwd:1:messagebus:x:103:107::/nonexistent:/usr/sbin/nologin
 /etc/passwd:1:gdm:x:116:122:Gnome Display Manager:/var/lib/gdm3:/bin/false

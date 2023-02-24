@@ -60,7 +60,7 @@ EXAMPLES
 **Display only the count of lines which match the pattern (`-n` line
 number ; `-o` only matching).**
 
-    $ bin/oc -no -E 's[aei]' /etc/passwd
+    $ oc -no -E 's[aei]' /etc/passwd
     22:1:messagebus:x:103:107::/nonexistent:/usr/sbin/nologin
     29:2:cups-pk-helper:x:110:115:user for cups-pk-helper service,,,:/home/cups-pk-helper:/usr/sbin/nologin
     30:2:saned:x:111:117::/var/lib/saned:/usr/sbin/nologin
@@ -73,7 +73,7 @@ number ; `-o` only matching).**
 (`-P` print file ; `-i` ignore case ; `-o` only matching ; `-t` display
 total count of file).**
 
-    $ bin/oc -Piot -F $'mes\ngno' /etc/passwd
+    $ oc -Piot -F $'mes\ngno' /etc/passwd
     /etc/passwd:3:games:x:5:60:games:/usr/games:/usr/sbin/nologin
     /etc/passwd:1:messagebus:x:103:107::/nonexistent:/usr/sbin/nologin
     /etc/passwd:1:gdm:x:116:122:Gnome Display Manager:/var/lib/gdm3:/bin/false

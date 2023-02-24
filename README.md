@@ -1,23 +1,46 @@
-![<https://github.com/jfgiraud/quote-and-join/actions>](https://img.shields.io/github/actions/workflow/status/jfgiraud/quote-and-join/main.yml?label=CI)
+![<https://github.com/jfgiraud/occurrence-count/actions>](https://img.shields.io/github/actions/workflow/status/jfgiraud/occurrence-count/main.yml?label=CI)
 
-quote and join utilities
-========================
+Description
+===========
 
 **oc** is a small utility to count occurences of a string or pattern in
 each line of files.
 
-usage
+The destination directory will contain 3 sub-directories: `bin`, `share`
+and `man`.
+
+Installation
+============
+
+**Using git repo.**
+
+    $ git clone https://github.com/jfgiraud/occurrence-count.git
+    $ cd occurrence-count
+    $ sudo make install DESTDIR=/usr/local
+
+**Using latest tarball release.**
+
+    $ curl -s -L https://api.github.com/repos/jfgiraud/occurrence-count/releases/latest | grep browser_download_url | cut -d':' -f2- | tr -d ' ",' | xargs wget -O occurrence-count.tgz
+    $ sudo tar zxvf occurrence-count.tgz -C /usr/local
+
+Usage
 =====
 
--   [oc](doc/generated/md/oc.md)
+**Use man !.**
 
-examples
-========
+    $ man oc
+
+**Or `-h` option.**
+
+    $ oc -h
+
+TLDR
+====
 
 **Display only the count of lines which match the pattern (`-n` line
 number ; `-o` only matching).**
 
-    $ bin/oc -no -E 's[aei]' /etc/passwd
+    $ oc -no -E 's[aei]' /etc/passwd
     22:1:messagebus:x:103:107::/nonexistent:/usr/sbin/nologin
     29:2:cups-pk-helper:x:110:115:user for cups-pk-helper service,,,:/home/cups-pk-helper:/usr/sbin/nologin
     30:2:saned:x:111:117::/var/lib/saned:/usr/sbin/nologin
@@ -30,7 +53,7 @@ number ; `-o` only matching).**
 (`-P` print file ; `-i` ignore case ; `-o` only matching ; `-t` display
 total count of file).**
 
-    $ bin/oc -Piot -F $'mes\ngno' /etc/passwd
+    $ oc -Piot -F $'mes\ngno' /etc/passwd
     /etc/passwd:3:games:x:5:60:games:/usr/games:/usr/sbin/nologin
     /etc/passwd:1:messagebus:x:103:107::/nonexistent:/usr/sbin/nologin
     /etc/passwd:1:gdm:x:116:122:Gnome Display Manager:/var/lib/gdm3:/bin/false
