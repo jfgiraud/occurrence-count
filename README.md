@@ -34,7 +34,7 @@ Usage
 
     $ oc -h
 
-TLDR
+Examples
 ====
 
 **Display only the count of lines which match the pattern (`-n` line
