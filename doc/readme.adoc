@@ -38,6 +38,6 @@ $ man oc
 $ oc -h
 ----
 
-== TLDR
+== Examples
 
 include::oc.adoc[tag=examples]
