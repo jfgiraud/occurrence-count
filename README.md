@@ -6,11 +6,11 @@ Description
 **oc** is a small utility to count occurences of a string or pattern in
 each line of files.
 
-The destination directory will contain 3 sub-directories: `bin`, `share`
-and `man`.
-
 Installation
 ============
+
+The destination directory will contain 3 sub-directories: `bin`, `share`
+and `man`.
 
 **Using git repo.**
 

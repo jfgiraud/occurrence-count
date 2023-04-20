@@ -4,10 +4,9 @@ image:https://img.shields.io/github/actions/workflow/status/jfgiraud/occurrence-
 
 *oc* is a small utility to count occurences of a string or pattern in each line of files.
 
+== Installation
 
 The destination directory will contain 3 sub-directories: `bin`, `share` and `man`.
-
-== Installation
 
 .Using git repo
 [source,shell]
