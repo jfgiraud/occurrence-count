@@ -1,3 +1,6 @@
+
+[//]: # (This file is generated, modify doc/readme.adoc and regenerate it with 'make update-doc')
+
 ![<https://github.com/jfgiraud/occurrence-count/actions>](https://img.shields.io/github/actions/workflow/status/jfgiraud/occurrence-count/main.yml?label=CI)
 
 Description
@@ -35,7 +38,7 @@ Usage
     $ oc -h
 
 Examples
-====
+========
 
 **Display only the count of lines which match the pattern (`-n` line
 number ; `-o` only matching).**

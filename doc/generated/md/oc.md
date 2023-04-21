@@ -19,11 +19,14 @@ With no FILE, or when FILE is `-`, read standard input.
 OPTIONS
 =======
 
-Select and sort items
----------------------
-
 **-h**  
 Display help.
+
+**-v**  
+Display version.
+
+Select and sort items
+---------------------
 
 **-E** *pattern*  
 Interpret PATTERN as an extended regular expression.

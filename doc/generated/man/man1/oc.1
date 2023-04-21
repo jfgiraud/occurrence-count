@@ -2,12 +2,12 @@
 .\"     Title: oc
 .\"    Author: [see the "AUTHORS" section]
 .\" Generator: Asciidoctor 1.5.5
-.\"      Date: 2023-02-24
+.\"      Date: 2023-04-21
 .\"    Manual: User commands
-.\"    Source: occurence-count 0.0.7
+.\"    Source: occurence-count 0.0.8
 .\"  Language: English
 .\"
-.TH "OC" "1" "2023-02-24" "occurence\-count 0.0.7" "User commands"
+.TH "OC" "1" "2023-04-21" "occurence\-count 0.0.8" "User commands"
 .ie \n(.g .ds Aq \(aq
 .el       .ds Aq '
 .ss \n[.ss] 0
@@ -29,12 +29,17 @@ oc \- Count occurrences of a string or pattern in each line of files
 .sp
 With no FILE, or when FILE is \f[CR]\-\fP, read standard input.
 .SH "OPTIONS"
-.SS "Select and sort items"
 .sp
 \fB\-h\fP
 .RS 4
 Display help.
 .RE
+.sp
+\fB\-v\fP
+.RS 4
+Display version.
+.RE
+.SS "Select and sort items"
 .sp
 \fB\-E\fP \fIpattern\fP
 .RS 4
@@ -118,6 +123,6 @@ $ oc \-Piot \-F $\(aqmes\(rsngno\(aq /etc/passwd
 Written by Jean\-François Giraud.
 .SH "COPYRIGHT"
 .sp
-Copyright \(co 2020 Jean\-François Giraud.  License GPLv3+: GNU GPL version 3 or later \c
+Copyright \(co 2023 Jean\-François Giraud.  License GPLv3+: GNU GPL version 3 or later \c
 .URL "http://gnu.org/licenses/gpl.html" "" "."
 This is free software: you are free to change and redistribute it.  There is NO WARRANTY, to the extent permitted by law.
