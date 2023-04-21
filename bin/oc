@@ -1,8 +1,8 @@
 #!/bin/bash
 
 
-usage() {
-    cat <<-EOF
+function usage() {
+    (cat <<-EOF
 #BEGIN_DO_NOT_MODIFY:make update-doc
 OC(1)                                                          User commands                                                         OC(1)
 
@@ -79,6 +79,12 @@ COPYRIGHT
 occurence-count 0.0.7                                           2023-02-24                                                           OC(1)
 #END_DO_NOT_MODIFY:make update-doc
 EOF
+) | awk '/#BEGIN_DO_NOT_MODIFY:make update-doc/,/^#END_DO_NOT_MODIFY:make update-doc/' | awk '/NAME/,/AUTHOR/' | tail -n +1 | head -n -1
+    exit 0
+}
+
+function display_version() {
+    grep -B1 '#END_DO_NOT_MODIFY:make update-doc' $0 | head -n1 | cut -d ' ' -f2
     exit 0
 }
 
@@ -100,41 +106,44 @@ display_total=0
 print_filename=-1
 ignore_case=''
 eol=$'\n'
-while getopts ":hF:E:ontpPi" o
+while getopts ":hF:E:ontpPiv" o
 do
 	  case "$o" in
 		    h)
                 usage
-            ;;
+                ;;
 	    	E)
                 option='-E'
                 what="${OPTARG}"
-            ;;
+                ;;
 	    	F)
                 option='-F'
                 what="${OPTARG}"
-            ;;
+                ;;
             o)
                 only_matching=1
-            ;;
+                ;;
             n)
                 display_line_number=1
-            ;;
+                ;;
             i)
                 ignore_case='-i'
-            ;;
+                ;;
             t)
                 display_total=1
-            ;;
+                ;;
             P)
                 print_filename=1
-            ;;
+                ;;
             p)
                 print_filename=0
-            ;;
+                ;;
+            v)
+                display_version
+                ;;
             ?)
                 error "An argument is requiered for option -${OPTARG}."
-            ;;
+                ;;
 	  esac
 done
 
