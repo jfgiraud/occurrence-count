@@ -4,7 +4,7 @@
 function usage() {
     (cat <<-EOF
 #BEGIN_DO_NOT_MODIFY:make update-doc
-OC(1)                                                                                    User commands                                                                                    OC(1)
+OC(1)                                                                                                      User commands                                                                                                     OC(1)
 
 NAME
        oc - Count occurrences of a string or pattern in each line of files
@@ -25,6 +25,10 @@ OPTIONS
            Display version.
 
    Select and sort items
+       -c selection
+           Check if the current line count is in the given selection. If true, the matching line is displayed. The selection is a list separed by the , character. Each item of the list is an integer or a range begin-end where
+           begin is by default 1 (if -o setted) or 0. begin and end values are optional and inclusives.
+
        -E pattern
            Interpret PATTERN as an extended regular expression.
 
@@ -69,14 +73,22 @@ EXAMPLES
            /etc/passwd:1:gdm:x:116:122:Gnome Display Manager:/var/lib/gdm3:/bin/false
            /etc/passwd:#5
 
+       Display lines having a count ==1 or >=3
+
+           $ oc -Pit -F $'mes\ngno' -c '1,3-' /etc/passwd
+           /etc/passwd:3:games:x:5:60:games:/usr/games:/usr/sbin/nologin
+           /etc/passwd:1:messagebus:x:103:107::/nonexistent:/usr/sbin/nologin
+           /etc/passwd:1:gdm:x:116:122:Gnome Display Manager:/var/lib/gdm3:/bin/false
+           /etc/passwd:#5
+
 AUTHOR
        Written by Jean-François Giraud.
 
 COPYRIGHT
-       Copyright © 2023 Jean-François Giraud. License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>. This is free software: you are free to change and redistribute it.
-       There is NO WARRANTY, to the extent permitted by law.
+       Copyright © 2023 Jean-François Giraud. License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>. This is free software: you are free to change and redistribute it.  There  is  NO  WARRANTY,  to  the
+       extent permitted by law.
 
-occurence-count 0.0.8                                                                      2023-04-21                                                                                     OC(1)
+occurence-count 0.0.9                                                                                       2023-09-13                                                                                                       OC(1)
 #END_DO_NOT_MODIFY:make update-doc
 EOF
 ) | awk '/#BEGIN_DO_NOT_MODIFY:make update-doc/,/^#END_DO_NOT_MODIFY:make update-doc/' | awk '/NAME/,/AUTHOR/' | tail -n +1 | head -n -1
@@ -106,11 +118,15 @@ display_total=0
 print_filename=-1
 ignore_case=''
 eol=$'\n'
-while getopts ":hF:E:ontpPiv" o
+filtering=''
+while getopts ":hF:E:c:ontpPiv" o
 do
 	  case "$o" in
 		    h)
                 usage
+                ;;
+            c)
+                filtering="${OPTARG}"
                 ;;
 	    	E)
                 option='-E'
@@ -181,6 +197,40 @@ do
             line_number=$((line_number+1))
         fi
         count=$(echo "${line}" | grep -o ${option} ${ignore_case} "${what}" | wc -l)
+
+        matching=0
+        if [[ "${filtering}" != '' ]]; then
+            IFS=',' read -ra elements <<< "${filtering}"
+            for element in "${elements[@]}"; do
+                if [[ "${element}" =~ ^([0-9]+)$ ]]; then
+                    if [[ ${count} -eq ${BASH_REMATCH[1]} ]]; then
+                        matching=1
+                    fi
+                elif [[ "${element}" =~ ^([0-9]+)?-([0-9]+)?$ ]]; then
+                    from=${BASH_REMATCH[1]}
+                    to=${BASH_REMATCH[2]}
+                    if [[ ${from} =~ ^$ ]]; then
+                        if [[ ${only_matching} -eq 1 ]]; then
+                            from=1
+                        else
+                            from=0
+                        fi
+                    fi
+                    if [[ ${to} =~ ^$ ]]; then
+                        if [[ ${count} -ge ${from} ]]; then
+                            matching=1
+                        fi
+                    else
+                        if [[ ${count} -ge ${from} && ${count} -le ${to} ]]; then
+                            matching=1
+                        fi
+                    fi
+                fi
+            done
+            if [[ ${matching} -eq 0 ]]; then
+                continue
+            fi
+        fi
         file_total=$((file_total + ${count}))
         if [[ $only_matching -eq 0 ]]; then
             printf "%s%s%d:%s%s" "${fn:+${fn}:}" "${line_number:+${line_number}:}" ${count} "${line}" "${eol}"

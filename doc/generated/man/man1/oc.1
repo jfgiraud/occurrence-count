@@ -2,12 +2,12 @@
 .\"     Title: oc
 .\"    Author: [see the "AUTHORS" section]
 .\" Generator: Asciidoctor 1.5.5
-.\"      Date: 2023-04-21
+.\"      Date: 2023-09-13
 .\"    Manual: User commands
-.\"    Source: occurence-count 0.0.8
+.\"    Source: occurence-count 0.0.9
 .\"  Language: English
 .\"
-.TH "OC" "1" "2023-04-21" "occurence\-count 0.0.8" "User commands"
+.TH "OC" "1" "2023-09-13" "occurence\-count 0.0.9" "User commands"
 .ie \n(.g .ds Aq \(aq
 .el       .ds Aq '
 .ss \n[.ss] 0
@@ -40,6 +40,14 @@ Display help.
 Display version.
 .RE
 .SS "Select and sort items"
+.sp
+\fB\-c\fP \fIselection\fP
+.RS 4
+Check if the current line count is in the given selection.
+If true, the matching line is displayed.
+The selection is a list separed by the \f[CR],\fP character.
+Each item of the list is an integer or a range \f[CR]begin\-end\fP where \fBbegin\fP is by default 1 (if \f[CR]\-o\fP setted) or 0. \fBbegin\fP and \fBend\fP values are optional and inclusives.
+.RE
 .sp
 \fB\-E\fP \fIpattern\fP
 .RS 4
@@ -110,6 +118,23 @@ $ oc \-no \-E \(aqs[aei]\(aq /etc/passwd
 .\}
 .nf
 $ oc \-Piot \-F $\(aqmes\(rsngno\(aq /etc/passwd
+/etc/passwd:3:games:x:5:60:games:/usr/games:/usr/sbin/nologin
+/etc/passwd:1:messagebus:x:103:107::/nonexistent:/usr/sbin/nologin
+/etc/passwd:1:gdm:x:116:122:Gnome Display Manager:/var/lib/gdm3:/bin/false
+/etc/passwd:#5
+.fi
+.if n \{\
+.RE
+.\}
+.sp
+.B Display lines having a count \f[CR]==1\fP \fBor\fP \f[CR]>=3\fP
+.br
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+$ oc \-Pit \-F $\(aqmes\(rsngno\(aq \-c \(aq1,3\-\(aq /etc/passwd
 /etc/passwd:3:games:x:5:60:games:/usr/games:/usr/sbin/nologin
 /etc/passwd:1:messagebus:x:103:107::/nonexistent:/usr/sbin/nologin
 /etc/passwd:1:gdm:x:116:122:Gnome Display Manager:/var/lib/gdm3:/bin/false

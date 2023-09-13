@@ -28,6 +28,13 @@ Display version.
 Select and sort items
 ---------------------
 
+**-c** *selection*  
+Check if the current line count is in the given selection. If true, the
+matching line is displayed. The selection is a list separed by the `,`
+character. Each item of the list is an integer or a range `begin-end`
+where **begin** is by default 1 (if `-o` setted) or 0. **begin** and
+**end** values are optional and inclusives.
+
 **-E** *pattern*  
 Interpret PATTERN as an extended regular expression.
 
@@ -77,6 +84,14 @@ number ; `-o` only matching).**
 total count of file).**
 
     $ oc -Piot -F $'mes\ngno' /etc/passwd
+    /etc/passwd:3:games:x:5:60:games:/usr/games:/usr/sbin/nologin
+    /etc/passwd:1:messagebus:x:103:107::/nonexistent:/usr/sbin/nologin
+    /etc/passwd:1:gdm:x:116:122:Gnome Display Manager:/var/lib/gdm3:/bin/false
+    /etc/passwd:#5
+
+**Display lines having a count `==1` **or** `>=3`.**
+
+    $ oc -Pit -F $'mes\ngno' -c '1,3-' /etc/passwd
     /etc/passwd:3:games:x:5:60:games:/usr/games:/usr/sbin/nologin
     /etc/passwd:1:messagebus:x:103:107::/nonexistent:/usr/sbin/nologin
     /etc/passwd:1:gdm:x:116:122:Gnome Display Manager:/var/lib/gdm3:/bin/false
