@@ -19,6 +19,7 @@ and `man`.
 
     $ git clone https://github.com/jfgiraud/occurrence-count.git
     $ cd occurrence-count
+    $ sudo apt update -y && sudo apt install -y make asciidoctor pandoc
     $ sudo make install DESTDIR=/usr/local
 
 **Using latest tarball release.**
